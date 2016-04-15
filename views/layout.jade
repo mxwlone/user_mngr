@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+    //link(rel='stylesheet', href='/css/custom.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/icon?family=Material+Icons')
+    link(rel='stylesheet', href='/css/materialize.min.css', media="screen, projection")
+    script(type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js")
+
+  body
+    nav
+      .nav-wrapper
+        a(href="/").brand-logo.center User Management
+        ul.right.hide-on-med-and-down
+          li
+           a(href="/user")
+            i.material-icons list
+           a(href="/user/new")
+            i.material-icons add
+           a(href="/user/delete")
+            i.material-icons delete
+
+    .container
+      block content
+
+  script(type='text/javascript' src='/js/materialize.min.js')

@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  h1= title
+
+  div
+    table
+      thead
+        tr
+          th Id
+          th Email
+          th First Name
+          th Last Name
+          th Day of Birth
+          th Active
+      tbody
+        each user, i in users
+          tr
+            td= user.id
+            td= user.email
+            td= user.first_name
+            td= user.last_name
+            td= user.birth
+            td= user.active
