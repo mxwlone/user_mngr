@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var orm = require('orm');
 var passwordHash = require('password-hash');
 
-var routes = require('./routes/index');
-var user = require('./routes/user');
+var routes = require('./controllers/index');
+var user = require('./controllers/user');
 
 var app = express();
 
