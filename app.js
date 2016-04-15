@@ -6,11 +6,23 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var orm = require('orm');
 var passwordHash = require('password-hash');
+var session = require('express-session');
 
 var routes = require('./controllers/index');
 var user = require('./controllers/user');
 
 var app = express();
+
+app.use(session({
+  secret: 'c4319c57fa7608df58726f5ca841cc8c',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
 
 // database setup
 app.use(orm.express("mysql://root:peter123@localhost/user_management?debug=true", {
