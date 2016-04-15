@@ -7,22 +7,12 @@ var bodyParser = require('body-parser');
 var orm = require('orm');
 var passwordHash = require('password-hash');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 var routes = require('./controllers/index');
 var user = require('./controllers/user');
 
 var app = express();
-
-app.use(session({
-  secret: 'c4319c57fa7608df58726f5ca841cc8c',
-  resave: false,
-  saveUninitialized: true
-}));
-
-app.use(function(req,res,next){
-  res.locals.session = req.session;
-  next();
-});
 
 // database setup
 app.use(orm.express("mysql://root:peter123@localhost/user_management?debug=true", {
@@ -77,6 +67,19 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: 'c4319c57fa7608df58726f5ca841cc8c',
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
+
+// uncomment to grant jade templates access to the session object
+//app.use(function(req,res,next){
+//  res.locals.session = req.session;
+//  next();
+//});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
