@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var orm = require('orm');
-var passwordHash = require('password-hash');
 var session = require('express-session');
 var flash = require('connect-flash');
 var config = require('./config')();
@@ -16,45 +15,13 @@ var user = require('./controllers/user');
 var app = express();
 
 // database setup
+var userModel = require('./models/user.js');
+
 var url = "mysql://" + config.mysql.user + ":" + config.mysql.password + "@" +
     config.mysql.host + ":" + config.mysql.port + "/" + config.mysql.database + "?" + config.mysql.params;
 app.use(orm.express(url, {
   define: function (db, models, next) {
-    models.user = db.define("users", {
-      id          : { type: 'serial', key: true },
-      first_name  : { type: 'text', size: 50 },
-      last_name   : { type: 'text', size: 50 },
-      birth       : { type: 'date', time: false },
-      email       : { type: 'text', size: 50, required: true },
-      password    : { type: 'text', size: 200 },
-      active      : { type: 'boolean', defaultValue: true }
-    }, {
-      methods: {
-        getName: function() {
-          return this.first_name + " " + this.last_name;
-        }
-      }
-    });
-
-    // drop previous tables
-    db.drop(function () {
-
-      // create tables
-      db.sync(function(err) {
-        if (err) throw err;
-
-        // seed admin user
-        var adminUser = {};
-        adminUser.id = 1;
-        adminUser.first_name = "Armin";
-        adminUser.last_name = "Admin";
-        adminUser.email = "admin@site.com";
-        adminUser.password = passwordHash.generate('peter123', { algorithm: 'sha256', saltLength: 64, iterations: 2});
-        models.user.create(adminUser, function(err, results) {
-          if (err) console.log(err);
-        });
-      });
-    });
+    userModel(db, models);
 
     next();
   }
