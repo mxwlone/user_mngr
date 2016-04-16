@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha tests/ --reporter spec"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -18,5 +19,9 @@
     "orm": "^2.1.30",
     "password-hash": "^1.2.2",
     "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
+    "should": "^8.3.1"
   }
 }
