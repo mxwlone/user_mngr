@@ -3,16 +3,19 @@
  */
 var passwordHash = require('password-hash');
 
-module.exports = function (db, models, cb) {
-    models.user = db.define("users", {
-        id          : { type: 'serial', key: true },
-        first_name  : { type: 'text', size: 50 },
-        last_name   : { type: 'text', size: 50 },
-        birth       : { type: 'date', time: false },
-        email       : { type: 'text', size: 50, required: true },
-        password    : { type: 'text', size: 200 },
-        active      : { type: 'boolean', defaultValue: true }
-    }, {
+var table = {
+    id          : { type: 'serial', key: true },
+    first_name  : { type: 'text', size: 50 },
+    last_name   : { type: 'text', size: 50 },
+    birth       : { type: 'date', time: false },
+    email       : { type: 'text', size: 50, required: true },
+    password    : { type: 'text', size: 200 },
+    active      : { type: 'boolean', defaultValue: true }
+};
+
+exports.table = table;
+exports.model = function (db, models, cb) {
+    models.user = db.define("users", table, {
         methods: {
             getName: function() {
                 return this.first_name + " " + this.last_name;

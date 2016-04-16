@@ -21,7 +21,7 @@ var url = "mysql://" + config.mysql.user + ":" + config.mysql.password + "@" +
     config.mysql.host + ":" + config.mysql.port + "/" + config.mysql.database + "?" + config.mysql.params;
 app.use(orm.express(url, {
   define: function (db, models, next) {
-    userModel(db, models);
+    userModel.model(db, models);
 
     next();
   }
