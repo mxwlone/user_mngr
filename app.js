@@ -8,6 +8,7 @@ var orm = require('orm');
 var passwordHash = require('password-hash');
 var session = require('express-session');
 var flash = require('connect-flash');
+var config = require('./config')();
 
 var routes = require('./controllers/index');
 var user = require('./controllers/user');
@@ -15,7 +16,9 @@ var user = require('./controllers/user');
 var app = express();
 
 // database setup
-app.use(orm.express("mysql://root:peter123@localhost/user_management?debug=true", {
+var url = "mysql://" + config.mysql.user + ":" + config.mysql.password + "@" +
+    config.mysql.host + ":" + config.mysql.port + "/" + config.mysql.database + "?" + config.mysql.params;
+app.use(orm.express(url, {
   define: function (db, models, next) {
     models.user = db.define("users", {
       id          : { type: 'serial', key: true },
