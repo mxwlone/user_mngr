@@ -9,7 +9,7 @@ var config = {
         mysql: {
             host: 'localhost',
             port: 3306,
-            user: 'root',
+            user: 'admin',
             password: 'abc123',
             database: 'user_management',
             params: 'debug=true'
