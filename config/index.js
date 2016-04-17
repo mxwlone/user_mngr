@@ -10,7 +10,7 @@ var config = {
             host: 'localhost',
             port: 3306,
             user: 'root',
-            password: 'peter123',
+            password: 'abc123',
             database: 'user_management',
             params: 'debug=true'
         }
