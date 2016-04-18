@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var orm = require('orm');
 var session = require('express-session');
 var flash = require('connect-flash');
+var util = require('util');
+var expressValidator = require('express-validator');
 var config = require('./config')();
 
 var routes = require('./controllers/index');
@@ -36,6 +38,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(session({
   secret: 'c4319c57fa7608df58726f5ca841cc8c',
