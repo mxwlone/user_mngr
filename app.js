@@ -23,8 +23,20 @@ var url = "mysql://" + config.mysql.user + ":" + config.mysql.password + "@" +
     config.mysql.host + ":" + config.mysql.port + "/" + config.mysql.database + "?" + config.mysql.params;
 app.use(orm.express(url, {
   define: function (db, models, next) {
-    userModel.model(db, models);
+    // define tables
+    userModel.define(db, models);
 
+    // drop previous tables
+    db.drop(function () {
+
+      // create tables
+      db.sync(function(err) {
+        if (err) throw err;
+
+        //seed
+        userModel.seed(models);
+      });
+    });
     next();
   }
 }));
