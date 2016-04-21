@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "cd ~/vagrant/mysql_vm && vagrant up",
     "start": "node ./bin/www",
-    "test": "mocha tests/ --reporter spec"
+    "test": "mocha tests/ --reporter spec",
+    "startdb": "cd ~/vagrant/mysql_vm && vagrant up",
+    "stopdb": "cd ~/vagrant/mysql_vm && vagrant halt"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
