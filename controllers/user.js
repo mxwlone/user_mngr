@@ -42,11 +42,15 @@ router.post('/save', function(req, res, next) {
   }
 
   var newUser = {};
+
+  // required fields
   newUser.password = passwordHash.generate(req.body.password, { algorithm: 'sha256', saltLength: 64, iterations: 2});
-  if (req.body.first_name) newUser.first_name = req.body.first_name;
-  if (req.body.last_name) newUser.last_name = req.body.last_name;
-  if (req.body.email) newUser.email = req.body.email;
-  if (req.body.birth_submit) newUser.birth = req.body.birth_submit;
+  newUser.first_name = req.body.first_name;
+  newUser.email = req.body.email;
+
+  // optional optional fields
+  if (req.body.last_name != '') newUser.last_name = req.body.last_name;
+  if (req.body.birth_submit != '') newUser.birth = req.body.birth_submit;
 
   req.models.user.create(newUser, function(err, results) {
     if (err) {
