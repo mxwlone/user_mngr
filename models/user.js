@@ -5,15 +5,16 @@ var passwordHash = require('password-hash');
 
 var schema = {
     'first_name': {
-        notEmpty: true,
+        notEmpty: {
+            errorMessage: 'First Name is required'
+        },
         isAlpha: {
             errorMessage: 'First Name must only contain letters'
         },
         isLength: {
-            options: [{ min: 2, max: 50 }],
-            errorMessage: 'First Name must be between 2 and 50 characters'
-        },
-        errorMessage: 'First Name is required'
+            options: [{ min: 2, max: 20 }],
+            errorMessage: 'First Name must be between 2 and 20 characters'
+        }
     },
     'last_name': {
         optional: {
@@ -23,8 +24,8 @@ var schema = {
             errorMessage: 'Last Name must only contain letters'
         },
         isLength: {
-            options: [{ min: 2, max: 50 }],
-            errorMessage: 'Last Name must be between 2 and 50 characters'
+            options: [{ min: 2, max: 20 }],
+            errorMessage: 'Last Name must be between 2 and 20 characters'
         }
     },
     'birth': {
@@ -40,6 +41,10 @@ var schema = {
         },
         isEmail: {
             errorMessage: 'Invalid Email'
+        },
+        isLength: {
+            options: [{ min: 6, max: 30 }],
+            errorMessage: 'Email must be between 6 and 30 characters'
         }
     },
     'password': {
@@ -56,10 +61,10 @@ var schema = {
 var define = function(db, models) {
     models.user = db.define("users", {
         id          : { type: 'serial', key: true },
-        first_name  : { type: 'text', size: 50, required: true },
-        last_name   : { type: 'text', size: 50 },
+        first_name  : { type: 'text', size: 20, required: true },
+        last_name   : { type: 'text', size: 20 },
         birth       : { type: 'date', time: false },
-        email       : { type: 'text', size: 50, required: true },
+        email       : { type: 'text', size: 30, required: true },
         password    : { type: 'text', size: 200 },
         active      : { type: 'boolean', defaultValue: true }
     }, {
