@@ -71,6 +71,9 @@ var define = function(db, models) {
         methods: {
             getName: function() {
                 return this.first_name + " " + this.last_name;
+            },
+            getBirth: function() {
+                return this.birth.getDate() + "." + (this.birth.getMonth()+1) + "." + this.birth.getFullYear();
             }
         }
     });
