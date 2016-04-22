@@ -83,6 +83,7 @@ var seed = function(models) {
     adminUser.first_name = "Armin";
     adminUser.last_name = "Admin";
     adminUser.email = "admin@site.com";
+    adminUser.birth = "1986-03-01";
     adminUser.password = passwordHash.generate('peter123', { algorithm: 'sha256', saltLength: 64, iterations: 2});
     models.user.create(adminUser, function(err, results) {
         if (err) console.log(err);
