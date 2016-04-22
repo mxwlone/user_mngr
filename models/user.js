@@ -35,12 +35,21 @@ var schema = {
         errorMessage: 'Invalid Date of Birth'
     },
     'email': {
-        notEmpty: true,
+        notEmpty: {
+            errorMessage: 'Email is required'
+        },
         isEmail: {
             errorMessage: 'Invalid Email'
+        }
+    },
+    'password': {
+        notEmpty: {
+            errorMessage: 'Password is required'
         },
-        errorMessage: 'Email is required'
-
+        isLength: {
+            options: [{ min: 3, max: 20 }],
+            errorMessage: 'Password must be between 3 and 20 characters'
+        }
     }
 };
 
