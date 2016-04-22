@@ -74,7 +74,7 @@ var seed = function(models) {
         if (err) console.log(err);
     });
 };
-AdA
+
 exports.schema = schema;
 exports.define = define;
 exports.seed = seed;
