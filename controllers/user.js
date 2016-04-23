@@ -45,7 +45,7 @@ router.param('id', function (req, res, next, id) {
 });
 
 
-/* GET user edit */
+/* GET user */
 router.get('/:id', function(req, res, next) {
   if (!req.user) {
     next();
@@ -87,7 +87,6 @@ router.post('/save', function(req, res, next) {
     req.check('password', 'Password is required').notEmpty();
     req.check('password', 'Password must be between 3 and 20 characters').isLength({ min: 3, max: 20 });
     req.check('password', 'Passwords do not match').equals(req.body.password_confirm);
-    var mappedErrors = req.validationErrors(true);
   }
 
   // TODO validate email is unique
@@ -99,9 +98,9 @@ router.post('/save', function(req, res, next) {
   if (req.body.last_name) newUser.last_name = req.body.last_name;
   if (req.body.birth_submit) newUser.birth = req.body.birth_submit;
 
-  var errors = req.validationErrors();
-  if (errors) {
-    req.flash('errors', errors);
+  var validationErrors = req.validationErrors(true);
+  if (validationErrors) {
+    req.flash('errors', validationErrors);
     if (req.body.birth != '') newUser.birth = req.body.birth;
     req.flash('user', newUser);
     res.redirect('back');

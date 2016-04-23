@@ -47,7 +47,8 @@ block content
 
       .row
         each error in errors
-          p.error= error.msg
+          each field in error
+            p.error= field.msg
 
       .row
         //a.waves-effect.waves-light.btn Back
