@@ -6,7 +6,7 @@ var user = require('../models/user.js');
 
 
 /* GET users listing */
-router.get('/', function(req, res, next) {
+router.get('/list', function(req, res, next) {
   req.models.user.find({ active: true }, { order: 'id'}).omit('password').run(function(err, results) {
     res.render('user/list', { title: 'User list', users: results });
   });
