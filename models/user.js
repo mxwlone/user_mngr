@@ -3,6 +3,7 @@
  */
 var passwordHash = require('password-hash');
 
+// validation schema
 var schema = {
     'first_name': {
         notEmpty: {
@@ -28,12 +29,13 @@ var schema = {
             errorMessage: 'Last Name must be between 2 and 20 characters'
         }
     },
-    'birth': {
+    'birth_submit': {
         optional: {
             options: [{ checkFalsy: true }]
         },
-        isDate: true,
-        errorMessage: 'Invalid Date of Birth'
+        isDate: {
+            errorMessage: 'Invalid Date of Birth'
+        }
     },
     'email': {
         notEmpty: {
@@ -46,25 +48,17 @@ var schema = {
             options: [{ min: 6, max: 30 }],
             errorMessage: 'Email must be between 6 and 30 characters'
         }
-    },
-    'password': {
-        notEmpty: {
-            errorMessage: 'Password is required'
-        },
-        isLength: {
-            options: [{ min: 3, max: 20 }],
-            errorMessage: 'Password must be between 3 and 20 characters'
-        }
     }
 };
 
+// database schema
 var define = function(db, models) {
     models.user = db.define("users", {
         id          : { type: 'serial', key: true },
         first_name  : { type: 'text', size: 20, required: true },
         last_name   : { type: 'text', size: 20 },
         birth       : { type: 'date', time: false },
-        email       : { type: 'text', size: 30, required: true },
+        email       : { type: 'text', size: 30, required: true, unique: true },
         password    : { type: 'text', size: 200 },
         active      : { type: 'boolean', defaultValue: true }
     }, {
@@ -73,12 +67,15 @@ var define = function(db, models) {
                 return this.first_name + " " + this.last_name;
             },
             getBirth: function() {
-                return this.birth.getDate() + "." + (this.birth.getMonth()+1) + "." + this.birth.getFullYear();
+                return this.birth ?
+                    this.birth.getDate() + "." + (this.birth.getMonth()+1) + "." + this.birth.getFullYear() :
+                    null;
             }
         }
     });
 };
 
+// database seed
 var seed = function(models) {
     // seed admin user
     var adminUser = {};

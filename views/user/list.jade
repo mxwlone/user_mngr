@@ -3,22 +3,27 @@ extends ../layout
 block content
   h1= title
 
-  div
-    table
-      thead
-        tr
-          th Id
-          th Email
-          th First Name
-          th Last Name
-          th Day of Birth
-          th Active
-      tbody
-        each user, i in users
+  form.col.s12(action='',method='post')
+    div
+      table.highlight.responsive-table
+        thead
           tr
-            td= user.id
-            td= user.email
-            td= user.first_name
-            td= user.last_name
-            td= user.getBirth()
-            td= user.active
+            th Id
+            th Email
+            th First Name
+            th Last Name
+            th Day of Birth
+            th Active
+            th
+        tbody
+          each user, i in users
+            tr
+              td= user.id
+              td= user.email
+              td= user.first_name
+              td= user.last_name
+              td= user.getBirth()
+              td= user.active
+              td
+                button.btn-floating.waves-effect.waves-light.blue-grey(type='submit', name='id', value=user.id)
+                  i.material-icons edit
